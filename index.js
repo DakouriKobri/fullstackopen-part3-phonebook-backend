@@ -26,6 +26,16 @@ let persons = [
   },
 ];
 
+function dateTimeFormat(options) {
+  return new Intl.DateTimeFormat('en-US', options);
+}
+
+function generateId() {
+  return Math.floor(Math.random() * 100000000);
+}
+
+app.use(express.json());
+
 app.get('/info', (request, response) => {
   const numberOfPeople = persons.length;
 
@@ -35,10 +45,6 @@ app.get('/info', (request, response) => {
       : `Phone book has info for ${numberOfPeople} ${
           numberOfPeople > 1 ? 'people' : 'person'
         }.`;
-
-  function dateTimeFormat(options) {
-    return new Intl.DateTimeFormat('en-US', options);
-  }
 
   const weekday = dateTimeFormat({
     weekday: 'short',
@@ -87,6 +93,19 @@ app.delete('/api/persons/:id', (request, response) => {
   persons = persons.filter((person) => person.id !== id);
 
   response.status(204).end();
+});
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body;
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  };
+
+  persons = [...persons, person];
+
+  response.status(201).json(person);
 });
 
 const PORT = 3001;
