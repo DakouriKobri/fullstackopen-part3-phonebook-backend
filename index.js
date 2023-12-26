@@ -3,7 +3,7 @@ const express = require('express');
 
 const app = express();
 
-const persons = [
+let persons = [
   {
     id: 1,
     name: 'Arto Hellas',
@@ -25,20 +25,6 @@ const persons = [
     number: '39-23-6423122',
   },
 ];
-
-app.get('/api/persons', (request, response) => {
-  response.json(persons);
-});
-
-app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id);
-  console.log('id:', id);
-  const person = persons.find((person) => person.id === id);
-  console.log('person:', person);
-  if (!person) return response.status(404).end();
-
-  response.json(person);
-});
 
 app.get('/info', (request, response) => {
   const numberOfPeople = persons.length;
@@ -80,6 +66,27 @@ app.get('/info', (request, response) => {
   `;
 
   response.send(info);
+});
+
+app.get('/api/persons', (request, response) => {
+  response.json(persons);
+});
+
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+  if (!person) return response.status(404).end();
+  response.json(person);
+});
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+  if (!person) return response.status(404).end();
+
+  persons = persons.filter((person) => person.id !== id);
+
+  response.status(204).end();
 });
 
 const PORT = 3001;
