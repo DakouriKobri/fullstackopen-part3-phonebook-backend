@@ -26,9 +26,9 @@ let persons = [
   },
 ];
 
-app.get('/api/persons', (request, response) => {
-  response.json(persons);
-});
+function dateTimeFormat(options) {
+  return new Intl.DateTimeFormat('en-US', options);
+}
 
 app.get('/info', (request, response) => {
   const numberOfPeople = persons.length;
@@ -39,10 +39,6 @@ app.get('/info', (request, response) => {
       : `Phone book has info for ${numberOfPeople} ${
           numberOfPeople > 1 ? 'people' : 'person'
         }.`;
-
-  function dateTimeFormat(options) {
-    return new Intl.DateTimeFormat('en-US', options);
-  }
 
   const weekday = dateTimeFormat({
     weekday: 'short',
@@ -70,6 +66,33 @@ app.get('/info', (request, response) => {
   `;
 
   response.send(info);
+});
+
+app.get('/api/persons', (request, response) => {
+  response.json(persons);
+});
+
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+  if (!person) return response.status(404).end();
+  response.json(person);
+});
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+  if (!person) return response.status(404).end();
+
+  persons = persons.filter((person) => person.id !== id);
+
+  response.status(204).end();
+});
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body;
+
+  const id = Math.random;
 });
 
 const PORT = 3001;
