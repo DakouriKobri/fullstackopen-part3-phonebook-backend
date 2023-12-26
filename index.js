@@ -26,6 +26,10 @@ let persons = [
   },
 ];
 
+function dateTimeFormat(options) {
+  return new Intl.DateTimeFormat('en-US', options);
+}
+
 app.get('/info', (request, response) => {
   const numberOfPeople = persons.length;
 
@@ -35,10 +39,6 @@ app.get('/info', (request, response) => {
       : `Phone book has info for ${numberOfPeople} ${
           numberOfPeople > 1 ? 'people' : 'person'
         }.`;
-
-  function dateTimeFormat(options) {
-    return new Intl.DateTimeFormat('en-US', options);
-  }
 
   const weekday = dateTimeFormat({
     weekday: 'short',
