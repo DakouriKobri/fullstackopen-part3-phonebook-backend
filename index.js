@@ -107,10 +107,22 @@ app.delete('/api/persons/:id', (request, response) => {
 });
 
 app.post('/api/persons', (request, response) => {
-  const body = request.body;
+  const { name, number } = request.body;
+
+  if (!name) return response.status(400).json({ error: 'Name is missing' });
+  if (!number) return response.status(400).json({ error: 'Number is missing' });
+
+  const currentPerson = persons.find(
+    (person) => person.name.toLowerCase() === name.toLowerCase()
+  );
+
+  if (currentPerson) {
+    return response.status(400).json({ error: 'Name must be unique' });
+  }
+
   const person = {
-    name: body.name,
-    number: body.number,
+    name: name,
+    number: number,
     id: generateId(),
   };
 
