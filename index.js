@@ -26,6 +26,22 @@ let persons = [
   },
 ];
 
+function dateTimeFormat(options) {
+  return new Intl.DateTimeFormat('en-US', options);
+}
+
+app.get('/api/persons', (request, response) => {
+  response.json(persons);
+});
+
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+  if (!person) return response.status(404).end();
+
+  response.json(person);
+});
+
 app.get('/info', (request, response) => {
   const numberOfPeople = persons.length;
 
@@ -35,10 +51,6 @@ app.get('/info', (request, response) => {
       : `Phone book has info for ${numberOfPeople} ${
           numberOfPeople > 1 ? 'people' : 'person'
         }.`;
-
-  function dateTimeFormat(options) {
-    return new Intl.DateTimeFormat('en-US', options);
-  }
 
   const weekday = dateTimeFormat({
     weekday: 'short',
