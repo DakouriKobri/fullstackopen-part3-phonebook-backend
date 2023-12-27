@@ -1,5 +1,6 @@
 // NPM Packages
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -33,6 +34,8 @@ function dateTimeFormat(options) {
 function generateId() {
   return Math.floor(Math.random() * 100000000);
 }
+
+app.use(morgan('tiny'));
 
 app.get('/api/persons', (request, response) => {
   response.json(persons);
