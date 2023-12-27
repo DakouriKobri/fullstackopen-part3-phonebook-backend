@@ -30,6 +30,10 @@ function dateTimeFormat(options) {
   return new Intl.DateTimeFormat('en-US', options);
 }
 
+function generateId() {
+  return Math.floor(Math.random() * 100000000);
+}
+
 app.get('/api/persons', (request, response) => {
   response.json(persons);
 });
@@ -41,9 +45,6 @@ app.get('/api/persons/:id', (request, response) => {
 
   response.json(person);
 });
-function generateId() {
-  return Math.floor(Math.random() * 100000000);
-}
 
 app.use(express.json());
 
