@@ -35,21 +35,14 @@ function generateId() {
   return Math.floor(Math.random() * 100000000);
 }
 
-app.use(morgan('tiny'));
-
-app.get('/api/persons', (request, response) => {
-  response.json(persons);
-});
-
-app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id);
-  const person = persons.find((person) => person.id === id);
-  if (!person) return response.status(404).end();
-
-  response.json(person);
+morgan.token('body', (request, response) => {
+  return request.body && JSON.stringify(request.body);
 });
 
 app.use(express.json());
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+);
 
 app.get('/info', (request, response) => {
   const numberOfPeople = persons.length;
@@ -97,6 +90,7 @@ app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id);
   const person = persons.find((person) => person.id === id);
   if (!person) return response.status(404).end();
+
   response.json(person);
 });
 
