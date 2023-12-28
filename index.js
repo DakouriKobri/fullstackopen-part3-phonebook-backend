@@ -35,6 +35,10 @@ function generateId() {
   return Math.floor(Math.random() * 100000000);
 }
 
+function unknownEndpoint(request, response) {
+  return response.status(404).send({ message: 'Unknown endpoint' });
+}
+
 morgan.token('body', (request, response) => {
   return request.body && JSON.stringify(request.body);
 });
@@ -129,6 +133,8 @@ app.post('/api/persons', (request, response) => {
 
   response.status(201).json(person);
 });
+
+app.use(unknownEndpoint);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
