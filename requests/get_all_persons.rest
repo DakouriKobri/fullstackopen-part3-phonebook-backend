@@ -1,2 +1,5 @@
-### Get all persons
+### Get all persons from the development server
 GET http://localhost:3001/api/persons
+
+### Get all persons from the production server
+GET https://phonebook-backend-fso-course-uni-helsinki.onrender.com/api/persons
