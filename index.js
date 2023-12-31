@@ -123,23 +123,15 @@ app.post('/api/persons', (request, response) => {
   if (!name) return response.status(400).json({ error: 'Name is missing' });
   if (!number) return response.status(400).json({ error: 'Number is missing' });
 
-  const currentPerson = persons.find(
-    (person) => person.name.toLowerCase() === name.toLowerCase()
-  );
-
-  if (currentPerson) {
-    return response.status(400).json({ error: 'Name must be unique' });
-  }
-
-  const person = {
+  const person = new Person({
     name: name,
     number: number,
     id: generateId(),
-  };
+  });
 
-  persons = [...persons, person];
-
-  response.status(201).json(person);
+  person.save().then((savedPerson) => {
+    response.json(savedPerson);
+  });
 });
 
 app.use(unknownEndpoint);
