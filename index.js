@@ -119,10 +119,7 @@ app.post('/api/persons', (request, response) => {
   if (!name) return response.status(400).json({ error: 'Name is missing' });
   if (!number) return response.status(400).json({ error: 'Number is missing' });
 
-  const person = new Person({
-    name: name,
-    number: number,
-  });
+  const person = new Person({ name, number });
 
   person.save().then((savedPerson) => {
     response.json(savedPerson);
