@@ -20,7 +20,7 @@ function unknownEndpoint(request, response) {
 }
 
 function errorHandler(error, request, response, next) {
-  console.error(error);
+  console.error(error.message);
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'Malformed id' });
@@ -144,7 +144,11 @@ app.put('/api/persons/:id', (request, response, next) => {
 
   const person = { name, number };
 
-  Person.findByIdAndUpdate(id, person, { new: true })
+  Person.findByIdAndUpdate(id, person, {
+    new: true,
+    runValidators: true,
+    context: 'query',
+  })
     .then((updatePerson) => {
       response.json(updatePerson);
     })

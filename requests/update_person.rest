@@ -3,8 +3,8 @@ PUT http://localhost:3001/api/persons/659370443e6865ec2465316c
 Content-Type: application/json
 
 {
-  "name": "Ayah",
-  "number": "123123"
+  "name": "Dia",
+  "number": "321321"
 }
 
 ### Update a person from the production server
