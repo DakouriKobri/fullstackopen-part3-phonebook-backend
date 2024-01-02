@@ -140,6 +140,22 @@ app.post('/api/persons', (request, response) => {
   });
 });
 
+app.put('/api/persons/:id', (request, response, next) => {
+  const id = request.params.id;
+  const { name, number } = request.body;
+
+  if (!name) return response.status(400).json({ error: 'Name is missing' });
+  if (!number) return response.status(400).json({ error: 'Number is missing' });
+
+  const person = { name, number };
+
+  Person.findByIdAndUpdate(id, person, { new: true })
+    .then((updatePerson) => {
+      response.json(updatePerson);
+    })
+    .catch((error) => next(error));
+});
+
 app.use(unknownEndpoint);
 app.use(errorHandler);
 
