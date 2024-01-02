@@ -1,5 +1,5 @@
 ### Delete a single person by ID on the development server
-DELETE http://localhost:3001/api/persons/4
+DELETE http://localhost:3001/api/persons/6591a47f7ac665b5f1c85b8c
 
 ### Delete a single person by ID on the production server
 DELETE https://phonebook-backend-fso-course-uni-helsinki.onrender.com/api/persons/39564470

@@ -1,8 +1,8 @@
 // NPM Packages
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+require('dotenv').config();
 
 // Local Files
 const Person = require('./models/person');
@@ -104,13 +104,20 @@ app.get('/api/persons/:id', (request, response) => {
 });
 
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id);
-  const person = persons.find((person) => person.id === id);
-  if (!person) return response.status(404).end();
+  const id = request.params.id;
 
-  persons = persons.filter((person) => person.id !== id);
-
-  response.status(204).end();
+  Person.findByIdAndDelete(id)
+    .then((person) => {
+      if (!person) {
+        response.status(404).end();
+      } else {
+        response.status(204).end();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      response.status(400).json({ error: 'Malformatted id' });
+    });
 });
 
 app.post('/api/persons', (request, response) => {
