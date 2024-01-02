@@ -36,10 +36,6 @@ function dateTimeFormat(options) {
   return new Intl.DateTimeFormat('en-US', options);
 }
 
-function generateId() {
-  return Math.floor(Math.random() * 100000000);
-}
-
 function unknownEndpoint(request, response) {
   return response.status(404).send({ message: 'Unknown endpoint' });
 }
