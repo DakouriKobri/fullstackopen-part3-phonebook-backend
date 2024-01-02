@@ -105,12 +105,17 @@ app.get('/api/persons', (request, response) => {
   });
 });
 
-app.get('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id);
-  const person = persons.find((person) => person.id === id);
-  if (!person) return response.status(404).end();
-
-  response.json(person);
+app.get('/api/persons/:id', (request, response, next) => {
+  const id = request.params.id;
+  Person.findById(id)
+    .then((returnedPerson) => {
+      if (returnedPerson) {
+        response.json(returnedPerson);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => next(error));
 });
 
 app.delete('/api/persons/:id', (request, response, next) => {
