@@ -3,8 +3,8 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-  "name": "AD",
-  "number": "3999608342"
+  "name": "Addanah",
+  "number": "3999-608"
 }
 
 ### Create a person on the production server

@@ -14,12 +14,23 @@ mongoose
     console.log('Problem connecting to MongoDB:', error.message);
   });
 
+function validateNumber(number) {
+  return /\d{2}-\d{5,}/.test(number) || /\d{3}-\d{4,}/.test(number);
+}
+
 const personSchema = mongoose.Schema({
   name: {
     type: String,
     minLength: 3,
   },
-  number: String,
+  number: {
+    type: String,
+    minLength: 8,
+    validate: {
+      validator: validateNumber,
+      message: 'Number must start with 2 or 3 digits followed by a hyphen',
+    },
+  },
 });
 
 personSchema.set('toJSON', {
