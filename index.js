@@ -126,7 +126,6 @@ app.post('/api/persons', (request, response) => {
   const person = new Person({
     name: name,
     number: number,
-    id: generateId(),
   });
 
   person.save().then((savedPerson) => {
