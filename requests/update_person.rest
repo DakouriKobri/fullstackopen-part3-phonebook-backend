@@ -1,10 +1,10 @@
 ### Update a person from the development server
-PUT http://localhost:3001/api/persons/659370443e6865ec2465316c
+PUT http://localhost:3001/api/persons/6594c7eaebec58028255e607
 Content-Type: application/json
 
 {
-  "name": "Dia",
-  "number": "321321"
+  "name": "Adda",
+  "number": "321-32164"
 }
 
 ### Update a person from the production server
