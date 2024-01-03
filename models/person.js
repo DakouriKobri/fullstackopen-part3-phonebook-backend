@@ -15,7 +15,7 @@ mongoose
   });
 
 function validateNumber(number) {
-  return /\d{2}-\d{5,}/.test(number) || /\d{3}-\d{4,}/.test(number);
+  return /^\d{2,3}-\d{5,}$/.test(number);
 }
 
 const personSchema = mongoose.Schema({
