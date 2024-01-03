@@ -31,7 +31,7 @@ function errorHandler(error, request, response, next) {
   next(error);
 }
 
-morgan.token('body', (request, response) => {
+morgan.token('body', (request) => {
   return request.body && JSON.stringify(request.body);
 });
 
@@ -50,13 +50,13 @@ app.get('/info', (request, response, next) => {
     .catch((error) => next(error));
 
   const numberOfPeople = persons.length;
+  const moreThanOnePerson = numberOfPeople > 1;
 
   const peopleInfo =
     numberOfPeople === 0
       ? 'Phonebook is empty.'
-      : `Phone book has info for ${numberOfPeople} ${
-          numberOfPeople > 1 ? 'people' : 'person'
-        }.`;
+      : `Phone book has info for ${numberOfPeople} ${moreThanOnePerson} ? 'people' : 'person'
+       .`;
 
   const weekday = dateTimeFormat({
     weekday: 'short',
